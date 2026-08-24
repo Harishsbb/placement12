@@ -1,5 +1,3 @@
-import app from '../src/app';
+import app = require('../src/app');
 
-export default function handler(req: any, res: any) {
-  return app(req, res);
-}
+export = app;

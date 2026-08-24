@@ -8,4 +8,4 @@ if (!process.env.VERCEL) {
   });
 }
 
-export default app;
+export = app;
