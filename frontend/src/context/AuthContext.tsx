@@ -48,26 +48,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [token]);
 
   const login = async (email: string, password: string) => {
-    const res = await api.post('/auth/login', { email, password });
-    if (res.data.success) {
-      const newToken = res.data.token;
-      localStorage.setItem('pq_token', newToken);
-      setToken(newToken);
-      setUser(res.data.user);
-    } else {
-      throw new Error(res.data.message || 'Login failed');
+    try {
+      const res = await api.post('/auth/login', { email, password });
+      if (res.data.success) {
+        const newToken = res.data.token;
+        localStorage.setItem('pq_token', newToken);
+        setToken(newToken);
+        setUser(res.data.user);
+      } else {
+        throw new Error(res.data.message || 'Login failed');
+      }
+    } catch (err: any) {
+      const msg = err.response?.data?.message || err.message || 'Login failed';
+      throw new Error(msg);
     }
   };
 
   const register = async (userData: any) => {
-    const res = await api.post('/auth/register', userData);
-    if (res.data.success) {
-      const newToken = res.data.token;
-      localStorage.setItem('pq_token', newToken);
-      setToken(newToken);
-      setUser(res.data.user);
-    } else {
-      throw new Error(res.data.message || 'Registration failed');
+    try {
+      const res = await api.post('/auth/register', userData);
+      if (res.data.success) {
+        const newToken = res.data.token;
+        localStorage.setItem('pq_token', newToken);
+        setToken(newToken);
+        setUser(res.data.user);
+      } else {
+        throw new Error(res.data.message || 'Registration failed');
+      }
+    } catch (err: any) {
+      const msg = err.response?.data?.message || err.message || 'Registration failed';
+      throw new Error(msg);
     }
   };
 
