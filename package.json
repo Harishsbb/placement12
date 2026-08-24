@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd frontend && npm run build && cd .. && npx esbuild backend/src/server.ts --bundle --platform=node --target=node18 --outfile=api/index.js"
-  },
-  "dependencies": {
-    "esbuild": "^0.20.2"
+    "build": "cd frontend && npm run build"
   }
 }
