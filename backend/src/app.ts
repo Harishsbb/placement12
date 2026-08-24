@@ -34,7 +34,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Safely ensure DB is connected before handling requests
+// Fast health check endpoint (responds without requiring database connection)
+app.get(['/api/health', '/health'], (req, res) => {
+  res.json({ success: true, message: 'Placement Quest API is healthy and operational 🚀' });
+});
+
+// Safely ensure DB is connected before handling data routes
 app.use((req, res, next) => {
   connectDB()
     .then(() => next())
@@ -48,10 +53,6 @@ app.use((req, res, next) => {
 });
 
 // Routes (supports both /api/path and /path for Vercel multi-service routing)
-app.get(['/api/health', '/health'], (req, res) => {
-  res.json({ success: true, message: 'Placement Quest API is healthy and operational 🚀' });
-});
-
 app.use(['/api/auth', '/auth'], authRoutes);
 app.use(['/api/dashboard', '/dashboard'], dashboardRoutes);
 app.use(['/api/tasks', '/tasks'], taskRoutes);
