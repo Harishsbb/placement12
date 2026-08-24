@@ -7,7 +7,13 @@ export const connectDB = async (): Promise<void> => {
     return;
   }
 
-  const connStr = process.env.MONGODB_URI || 'mongodb://localhost:27017/placement-quest';
+  const connStr = process.env.MONGODB_URI || (process.env.VERCEL ? '' : 'mongodb://localhost:27017/placement-quest');
+  
+  if (!connStr) {
+    console.warn('[MongoDB Warning] MONGODB_URI environment variable is not defined on Vercel.');
+    return;
+  }
+
   try {
     const conn = await mongoose.connect(connStr, {
       serverSelectionTimeoutMS: 5000,
