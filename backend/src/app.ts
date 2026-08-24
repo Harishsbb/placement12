@@ -34,34 +34,41 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Ensure DB is connected for serverless invocations
-app.use(async (req, res, next) => {
-  await connectDB();
-  next();
+// Safely ensure DB is connected before handling requests
+app.use((req, res, next) => {
+  connectDB()
+    .then(() => next())
+    .catch((err) => {
+      console.error('[Database Middleware Error]', err);
+      res.status(500).json({
+        success: false,
+        message: err.message || 'Database connection error'
+      });
+    });
 });
 
-// Routes
-app.get('/api/health', (req, res) => {
+// Routes (supports both /api/path and /path for Vercel multi-service routing)
+app.get(['/api/health', '/health'], (req, res) => {
   res.json({ success: true, message: 'Placement Quest API is healthy and operational 🚀' });
 });
 
-app.use('/api/auth', authRoutes);
-app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/tasks', taskRoutes);
-app.use('/api/daily-plan', dailyPlanRoutes);
-app.use('/api/dsa', dsaRoutes);
-app.use('/api/aptitude', aptitudeRoutes);
-app.use('/api/technical', technicalRoutes);
-app.use('/api/communication', communicationRoutes);
-app.use('/api/interviews', interviewRoutes);
-app.use('/api/applications', applicationRoutes);
-app.use('/api', projectResumeRoutes);
-app.use('/api/study-time', studyTimeRoutes);
-app.use('/api/goals', goalRoutes);
-app.use('/api/analytics', analyticsRoutes);
-app.use('/api/achievements', achievementRoutes);
-app.use('/api/notifications', notificationRoutes);
-app.use('/api/seed', seedRoutes);
+app.use(['/api/auth', '/auth'], authRoutes);
+app.use(['/api/dashboard', '/dashboard'], dashboardRoutes);
+app.use(['/api/tasks', '/tasks'], taskRoutes);
+app.use(['/api/daily-plan', '/daily-plan'], dailyPlanRoutes);
+app.use(['/api/dsa', '/dsa'], dsaRoutes);
+app.use(['/api/aptitude', '/aptitude'], aptitudeRoutes);
+app.use(['/api/technical', '/technical'], technicalRoutes);
+app.use(['/api/communication', '/communication'], communicationRoutes);
+app.use(['/api/interviews', '/interviews'], interviewRoutes);
+app.use(['/api/applications', '/applications'], applicationRoutes);
+app.use(['/api/study-time', '/study-time'], studyTimeRoutes);
+app.use(['/api/goals', '/goals'], goalRoutes);
+app.use(['/api/analytics', '/analytics'], analyticsRoutes);
+app.use(['/api/achievements', '/achievements'], achievementRoutes);
+app.use(['/api/notifications', '/notifications'], notificationRoutes);
+app.use(['/api/seed', '/seed'], seedRoutes);
+app.use(['/api', '/'], projectResumeRoutes);
 
 // Global Error Handler
 app.use(errorHandler);
