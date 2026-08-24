@@ -38,4 +38,4 @@ const CommunicationSessionSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<ICommunicationSession>('CommunicationSession', CommunicationSessionSchema);
+export default (mongoose.models.CommunicationSession as mongoose.Model<ICommunicationSession>) || mongoose.model<ICommunicationSession>('CommunicationSession', CommunicationSessionSchema);

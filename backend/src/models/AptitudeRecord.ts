@@ -27,4 +27,4 @@ const AptitudeRecordSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IAptitudeRecord>('AptitudeRecord', AptitudeRecordSchema);
+export default (mongoose.models.AptitudeRecord as mongoose.Model<IAptitudeRecord>) || mongoose.model<IAptitudeRecord>('AptitudeRecord', AptitudeRecordSchema);

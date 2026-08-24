@@ -32,4 +32,4 @@ const DailyPlanSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IDailyPlan>('DailyPlan', DailyPlanSchema);
+export default (mongoose.models.DailyPlan as mongoose.Model<IDailyPlan>) || mongoose.model<IDailyPlan>('DailyPlan', DailyPlanSchema);

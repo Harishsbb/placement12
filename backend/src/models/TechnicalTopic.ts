@@ -25,4 +25,4 @@ const TechnicalTopicSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<ITechnicalTopic>('TechnicalTopic', TechnicalTopicSchema);
+export default (mongoose.models.TechnicalTopic as mongoose.Model<ITechnicalTopic>) || mongoose.model<ITechnicalTopic>('TechnicalTopic', TechnicalTopicSchema);

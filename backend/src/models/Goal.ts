@@ -25,4 +25,4 @@ const GoalSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IGoal>('Goal', GoalSchema);
+export default (mongoose.models.Goal as mongoose.Model<IGoal>) || mongoose.model<IGoal>('Goal', GoalSchema);

@@ -29,4 +29,4 @@ const StudySessionSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IStudySession>('StudySession', StudySessionSchema);
+export default (mongoose.models.StudySession as mongoose.Model<IStudySession>) || mongoose.model<IStudySession>('StudySession', StudySessionSchema);

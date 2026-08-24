@@ -29,4 +29,4 @@ const DSAProblemSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IDSAProblem>('DSAProblem', DSAProblemSchema);
+export default (mongoose.models.DSAProblem as mongoose.Model<IDSAProblem>) || mongoose.model<IDSAProblem>('DSAProblem', DSAProblemSchema);

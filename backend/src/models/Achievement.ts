@@ -25,4 +25,4 @@ const AchievementSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IAchievement>('Achievement', AchievementSchema);
+export default (mongoose.models.Achievement as mongoose.Model<IAchievement>) || mongoose.model<IAchievement>('Achievement', AchievementSchema);

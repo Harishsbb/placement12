@@ -35,4 +35,4 @@ const JobApplicationSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IJobApplication>('JobApplication', JobApplicationSchema);
+export default (mongoose.models.JobApplication as mongoose.Model<IJobApplication>) || mongoose.model<IJobApplication>('JobApplication', JobApplicationSchema);
