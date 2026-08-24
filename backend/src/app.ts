@@ -27,15 +27,18 @@ dotenv.config();
 
 const app = express();
 
-// Connect Database
-connectDB();
-
 // Middleware
 app.use(cors({
   origin: '*',
   credentials: true
 }));
 app.use(express.json());
+
+// Ensure DB is connected for serverless invocations
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 // Routes
 app.get('/api/health', (req, res) => {
